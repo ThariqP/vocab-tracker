@@ -8,11 +8,20 @@
     
     <!-- Base44 Database & Auth Mocks (Required for the app to run) -->
     <script>
-      globalThis.__B44_DB__ = { auth:{ isAuthenticated: async()=>false, me: async()=>null }, entities:new Proxy({}, { get:()=>({ filter:async()=>[], get:async()=>null, create:async()=>({}), update:async()=>({}), delete:async()=>({}) }) }), integrations:{ Core:{ UploadFile:async()=>({ file_url:'' }) } } };
+      globalThis.__B44_DB__ = { 
+        auth:{ 
+          // Flipped to true to bypass the login screen
+          isAuthenticated: async()=>true, 
+          // Added a fake user so the app has a profile to load
+          me: async()=>({ id: '1', name: 'Thariq' }) 
+        }, 
+        entities:new Proxy({}, { get:()=>({ filter:async()=>[], get:async()=>null, create:async()=>({}), update:async()=>({}), delete:async()=>({}) }) }), 
+        integrations:{ Core:{ UploadFile:async()=>({ file_url:'' }) } } 
+      };
       const db = globalThis.__B44_DB__;
       
       // Fixes the getAccessToken crash
-      window.getAccessToken = async () => null;
+      window.getAccessToken = async () => 'fake-token';
     </script>
 
     <!-- Link to your PWA manifest -->
