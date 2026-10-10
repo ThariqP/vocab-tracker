@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vocab Tracker</title>
     
-    <!-- Base44 Database Mock (Required for the app to run) -->
+    <!-- Base44 Database & Auth Mocks (Required for the app to run) -->
     <script>
       globalThis.__B44_DB__ = { auth:{ isAuthenticated: async()=>false, me: async()=>null }, entities:new Proxy({}, { get:()=>({ filter:async()=>[], get:async()=>null, create:async()=>({}), update:async()=>({}), delete:async()=>({}) }) }), integrations:{ Core:{ UploadFile:async()=>({ file_url:'' }) } } };
       const db = globalThis.__B44_DB__;
+      
+      // Fixes the getAccessToken crash
+      window.getAccessToken = async () => null;
     </script>
 
     <!-- Link to your PWA manifest -->
